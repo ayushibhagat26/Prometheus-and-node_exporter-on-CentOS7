@@ -194,14 +194,14 @@ metrics look like this
 sudo vi /etc/prometheus/prometheus.yml
 
 #### In the YML file add the node exporter target as shown below 
-```
+
 - job_name: 'node_exporter' 
     scrape_interval: 5s  
     static_configs: 
       - targets: ['35.198.249.251:9100'].
       
  After adding the node exporter target in YML file it should look like this
-```
+
 ### Restart the Prometheus services
 
 sudo systemctl restart prometheus
