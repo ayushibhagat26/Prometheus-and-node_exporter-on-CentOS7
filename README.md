@@ -153,7 +153,7 @@ sudo mv node_exporter-1.0.0-rc.0.linux-amd64/node_exporter /usr/local/bin/
 ### Create a node_exporter service file under systemd
 ```
 sudo vi /etc/systemd/system/node_exporter.service
-```
+
 [Unit] 
 Description=Node Exporter 
 After=network.target
@@ -166,6 +166,49 @@ ExecStart=/usr/local/bin/node_exporter
 
 [Install] 
 WantedBy=multi-user.target
+```
+### Reload the system daemon and start the node exporter service and enable it on boot system
+``` 
+sudo systemctl daemon-reload
+```
+```
+sudo systemctl start node_exporter
+```
+```
+Sudo systemctl status node_exporter
+```
+```
+sudo systemctl enable node_exporter
+```
+#### Access Node_Exporter Web UI
+
+#### Now you will be able to access the Node_Exporter on 9100 port. Make sure that port 9100 is open for web interface.
+
+http://IP-Address:9100/metrics
+
+metrics look like this
+
+#### Now add Node_Exporter to the target Prometheus server
+#### Login to the Prometheus server(server1) and open the prometheus.yml file.
+
+sudo vi /etc/prometheus/prometheus.yml
+
+#### In the YML file add the node exporter target as shown below 
+```
+- job_name: 'node_exporter' 
+    scrape_interval: 5s  
+    static_configs: 
+      - targets: ['35.198.249.251:9100'].
+      
+ After adding the node exporter target in YML file it should look like this
+```
+### Restart the Prometheus services
+
+sudo systemctl restart prometheus
+
+
+
+
 
 
 
